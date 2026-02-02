@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Xio Assets Shop</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.paypal.com/sdk/js?client-id=ASsURQsH4c-J2HKksQL331xAhUYJyOf3AHcvkhzuoXnnH5SPKdh3ORYzJNUwP9RuBdd7bQNGzKQcqzmK&currency=USD"></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-section">
+                <h1>Xio Assets Shop</h1>
+                <p>Premium Roblox Assets & Scripts</p>
+            </div>
+            <div class="header-actions">
+                <div id="user-info" style="display: none;">
+                    <span id="user-name-display">Welcome, <span id="user-name"></span></span>
+                    <a href="/logout" class="logout-btn">Logout</a>
+                </div>
+                <div id="login-section">
+                    <a href="/auth/discord" class="login-btn">Login with Discord</a>
+                </div>
+                <div class="cart-wishlist">
+                    <button class="wishlist-btn" id="wishlist-btn">
+                        <i class="fas fa-heart"></i>
+                        <span id="wishlist-count">0</span>
+                    </button>
+                    <button class="cart-btn" id="cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/home" class="nav-link" data-section="home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/about-us" class="nav-link" data-section="about-us"><i class="fas fa-info-circle"></i> About Us</a></li>
+                <li><a href="/services" class="nav-link active" data-section="services"><i class="fas fa-cogs"></i> Services</a></li>
+                <li><a href="/contact" class="nav-link" data-section="contact"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="services" class="section active">
+        <div class="services-container">
+            <h2 class="section-title">What I Can Build For You</h2>
+            <p class="section-description">Explore the range of professional Roblox development services I offer to bring your game ideas to life.</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-number">01</div>
+                    <h3>Custom Gameplay Systems</h3>
+                    <p>Combat systems, round systems, abilities, arenas, queues, and fully scripted gameplay features tailored to your game.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-number">02</div>
+                    <h3>UI + UX Systems</h3>
+                    <p>Clean, animated interfaces that make your game feel professional and easy for players to understand.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-number">03</div>
+                    <h3>Donation & Monetization</h3>
+                    <p>Tipjars, gamepass handling, developer product systems, leaderboards, and Robux transaction tracking.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-number">04</div>
+                    <h3>Data Saving Systems</h3>
+                    <p>Reliable DataStore setups for stats, inventories, currencies, and player progression.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-number">05</div>
+                    <h3>Optimization & Fixing</h3>
+                    <p>Bug fixing, script optimization, and performance improvements for existing games.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-number">06</div>
+                    <h3>Custom Feature Development</h3>
+                    <p>Have a gameplay idea? I'll script the full feature and integrate it smoothly into your current game.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for Product Details -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="product-details">
+                <img id="modal-image" src="" alt="">
+                <h2 id="modal-name"></h2>
+                <p id="modal-description" class="product-description"></p>
+                <h3>Features</h3>
+                <ul id="modal-features" class="features-list"></ul>
+            </div>
+            <div class="buy-section">
+                <div class="price-display">
+                    <div class="usd">USD: $<span id="modal-price-usd"></span></div>
+                    <div class="php">PHP: ₱<span id="modal-price-php"></span></div>
+                </div>
+                <div class="payment-options">
+                    <div class="payment-option">
+                        <input type="radio" id="paypal" name="payment" value="paypal">
+                        <label for="paypal">PayPal</label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" id="gcash" name="payment" value="gcash">
+                        <label for="gcash">GCash</label>
+                    </div>
+                </div>
+                <div id="paypal-button-container" class="paypal-button-container" style="display: none;"></div>
+                <div id="gcash-details" class="gcash-details" style="display: none;">
+                    <h4>Send to GCash</h4>
+                    <p class="gcash-number">09649025996</p>
+                    <p class="payment-instruction">Create a ticket in our Discord server and send receipt to owner to get your file.</p>
+                    <button id="confirm-gcash-btn" class="back-btn" style="margin-top: 15px;">Confirm Purchase</button>
+                </div>
+                <a href="#" class="back-btn" onclick="closeModal()">Back to Shop</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCartModal()">&times;</span>
+            <h2>Your Cart</h2>
+            <div id="cart-items" class="cart-items"></div>
+            <div class="cart-total">
+                <strong>Total: <span id="cart-total">$0.00</span></strong>
+            </div>
+            <button class="checkout-btn" onclick="checkout()">Checkout</button>
+        </div>
+    </div>
+
+    <!-- Wishlist Modal -->
+    <div id="wishlist-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeWishlistModal()">&times;</span>
+            <h2>Your Wishlist</h2>
+            <div id="wishlist-items" class="wishlist-items"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <footer>
+        <p>&copy; 2026 Xio All rights reserved.</p>
+    </footer>
+</body>
+</html>
